@@ -9,19 +9,29 @@
         table { border-collapse: collapse; width: 100%; margin-top: 20px; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
         th { background-color: #f0f0f0; }
+        label { font-weight: bold; margin-right: 10px; }
+        .filter-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
 
 <h1>Coop Lager og CoopGo – Interaktiv Oversikt</h1>
 
-<label for="prosent">Prosentandel (eks. 5):</label>
-<input type="number" id="prosent" value="5" min="1" max="20"> %
-
-<label for="kr">Verdi per kunde:</label>
-<input type="number" id="kr" value="500" min="100" max="1000"> kr
-
 <iframe src="coop_lagerkart_oppdatert.html" width="100%" height="600" style="border:none; margin-top: 20px;"></iframe>
+
+<div class="filter-container">
+    <label for="prosent">Prosentandel (f.eks. 5):</label>
+    <input type="number" id="prosent" value="5" min="1" max="20"> %
+
+    <label for="kr">Verdi per kunde:</label>
+    <input type="number" id="kr" value="500" min="100" max="1000"> kr
+</div>
 
 <div id="tabeller"></div>
 
@@ -52,7 +62,7 @@ function visTabeller() {
     const prosent = parseFloat(document.getElementById("prosent").value) || 0;
     const kr = parseFloat(document.getElementById("kr").value) || 0;
 
-    let html = "<h2>Coop Lagerlokasjoner</h2><table><tr><th>Navn</th><th>Adresse</th><th>ÅDT</th><th>Inntjening</th></tr>";
+    let html = "<h2>Coop Lagerlokasjoner</h2><table><tr><th>Navn</th><th>Adresse</th><th>ÅDT</th><th>Inntjening: ÅDT × prosent × kr</th></tr>";
     lagerData.forEach(item => {
         const adt = parseInt(item.adt.replace(/\s/g, ""));
         const inntjening = formater(adt * (prosent / 100) * kr);
@@ -60,7 +70,7 @@ function visTabeller() {
     });
     html += "</table>";
 
-    html += "<h2>Ønskede CoopGo-stasjoner</h2><table><tr><th>Navn</th><th>ÅDT</th><th>Inntjening</th></tr>";
+    html += "<h2>Ønskede CoopGo-stasjoner</h2><table><tr><th>Navn</th><th>ÅDT</th><th>Inntjening: ÅDT × prosent × kr</th></tr>";
     coopgoData.forEach(item => {
         if (item.adt === "Ukjent") {
             html += `<tr><td>${item.navn}</td><td>Ukjent</td><td>Estimert</td></tr>`;
