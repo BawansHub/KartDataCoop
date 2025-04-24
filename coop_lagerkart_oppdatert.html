@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9 = L.map(
+                "map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9",
+                {
+                    center: [63.4, 10.4],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_cfb244d6026ab4415f975b7ea0895a12 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_cfb244d6026ab4415f975b7ea0895a12.addTo(map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9);
+        
+    
+            var marker_2a7e0a7e03c418a97e4a491f9c796afe = L.marker(
+                [60.18024352472979, 11.158885611257535],
+                {
+}
+            ).addTo(map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9);
+        
+    
+            var icon_04cbf1ce1edc298b1c514e42e237393c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "shopping-cart",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_70c7f68183874b10909cee5dafbed7ae = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0f98fc699b19a7ec987a44efd9e02b77 = $(`<div id="html_0f98fc699b19a7ec987a44efd9e02b77" style="width: 100.0%; height: 100.0%;">     <strong>C-Log (Gardermoen)</strong><br>     Adresse: Vilbergvegen 130, 2067 Jessheim<br>     Hovedlager, høy trafikk, moderne og automatisert. Nær E6 og Oslo Lufthavn.<br><br>     <strong>ÅDT:</strong> 50 000+ kjøretøy per døgn<br>     <strong>Est. inntjening:</strong> 1,250,000 kr per dag     </div>`)[0];
+                popup_70c7f68183874b10909cee5dafbed7ae.setContent(html_0f98fc699b19a7ec987a44efd9e02b77);
+            
+        
+
+        marker_2a7e0a7e03c418a97e4a491f9c796afe.bindPopup(popup_70c7f68183874b10909cee5dafbed7ae)
+        ;
+
+        
+    
+    
+                marker_2a7e0a7e03c418a97e4a491f9c796afe.setIcon(icon_04cbf1ce1edc298b1c514e42e237393c);
+            
+    
+            var marker_6fb1f56a983ab48ea2a320b10bc1e31a = L.marker(
+                [59.77134150117978, 10.842567540069313],
+                {
+}
+            ).addTo(map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9);
+        
+    
+            var icon_8644608c98e266292e44caa88a58e078 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "shopping-cart",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e6a8f9ae30301f95863a384094139053 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4777a4310f70cebe2730c629b7dac6d8 = $(`<div id="html_4777a4310f70cebe2730c629b7dac6d8" style="width: 100.0%; height: 100.0%;">     <strong>Langhus (Viken)</strong><br>     Adresse: Regnbueveien 5, 1405 Langhus<br>     Automatisert logistikksenter nær E6, sør for Oslo.<br><br>     <strong>ÅDT:</strong> 35 000–45 000 kjøretøy per døgn<br>     <strong>Est. inntjening:</strong> 1,125,000 kr per dag     </div>`)[0];
+                popup_e6a8f9ae30301f95863a384094139053.setContent(html_4777a4310f70cebe2730c629b7dac6d8);
+            
+        
+
+        marker_6fb1f56a983ab48ea2a320b10bc1e31a.bindPopup(popup_e6a8f9ae30301f95863a384094139053)
+        ;
+
+        
+    
+    
+                marker_6fb1f56a983ab48ea2a320b10bc1e31a.setIcon(icon_8644608c98e266292e44caa88a58e078);
+            
+    
+            var marker_10e05807f855eabc95662f977191d8a4 = L.marker(
+                [63.341171780178996, 10.36926375562959],
+                {
+}
+            ).addTo(map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9);
+        
+    
+            var icon_b92837cf4a21174603324db5ee6a4284 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "shopping-cart",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_45c3cc9078c6a4c2e3118c3c5e86fde4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_db4437cd11e88f2abcfeb2239e673585 = $(`<div id="html_db4437cd11e88f2abcfeb2239e673585" style="width: 100.0%; height: 100.0%;">     <strong>Trondheim Regionlager</strong><br>     Adresse: Østre Rosten 108, 7075 Tiller<br>     Regionlager for Midt-Norge. God tilgjengelighet til E6.<br><br>     <strong>ÅDT:</strong> 25 000–30 000 kjøretøy per døgn<br>     <strong>Est. inntjening:</strong> 750,000 kr per dag     </div>`)[0];
+                popup_45c3cc9078c6a4c2e3118c3c5e86fde4.setContent(html_db4437cd11e88f2abcfeb2239e673585);
+            
+        
+
+        marker_10e05807f855eabc95662f977191d8a4.bindPopup(popup_45c3cc9078c6a4c2e3118c3c5e86fde4)
+        ;
+
+        
+    
+    
+                marker_10e05807f855eabc95662f977191d8a4.setIcon(icon_b92837cf4a21174603324db5ee6a4284);
+            
+    
+            var marker_c5f082356c9c54b6394c3b15771bc97f = L.marker(
+                [58.93242369678288, 5.742498482347647],
+                {
+}
+            ).addTo(map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9);
+        
+    
+            var icon_1bfe0cda1aaa4ff7e7da56db967ed61f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "shopping-cart",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_33afbb9c772ca81f29e052fdd42e44ad = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_02d691f9bee9b5137b4ce03d3a5d47dd = $(`<div id="html_02d691f9bee9b5137b4ce03d3a5d47dd" style="width: 100.0%; height: 100.0%;">     <strong>Stavanger Regionlager</strong><br>     Adresse: Nesflåtveien 4, 4018 Stavanger<br>     Regionlager for Sørvestlandet. Ligger i trafikkert næringsområde.<br><br>     <strong>ÅDT:</strong> 20 000–25 000 kjøretøy per døgn<br>     <strong>Est. inntjening:</strong> 625,000 kr per dag     </div>`)[0];
+                popup_33afbb9c772ca81f29e052fdd42e44ad.setContent(html_02d691f9bee9b5137b4ce03d3a5d47dd);
+            
+        
+
+        marker_c5f082356c9c54b6394c3b15771bc97f.bindPopup(popup_33afbb9c772ca81f29e052fdd42e44ad)
+        ;
+
+        
+    
+    
+                marker_c5f082356c9c54b6394c3b15771bc97f.setIcon(icon_1bfe0cda1aaa4ff7e7da56db967ed61f);
+            
+    
+            var marker_4c05639d9a1863ce65f7f4dfdefe429e = L.marker(
+                [60.32525961860274, 5.363368011266229],
+                {
+}
+            ).addTo(map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9);
+        
+    
+            var icon_32d7bbb2a99648503890c7c325b996cb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "shopping-cart",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_324789f071dc1deb6c8a547f677e66a3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9cdca5da4b1869ae0a2a0a86ae0e6945 = $(`<div id="html_9cdca5da4b1869ae0a2a0a86ae0e6945" style="width: 100.0%; height: 100.0%;">     <strong>Bergen Regionlager</strong><br>     Adresse: Sandbrekkevegen 81, 5225 Nesttun<br>     Regionlager med god tilgang til hovedveinettet i Bergen.<br><br>     <strong>ÅDT:</strong> 30 000–35 000 kjøretøy per døgn<br>     <strong>Est. inntjening:</strong> 875,000 kr per dag     </div>`)[0];
+                popup_324789f071dc1deb6c8a547f677e66a3.setContent(html_9cdca5da4b1869ae0a2a0a86ae0e6945);
+            
+        
+
+        marker_4c05639d9a1863ce65f7f4dfdefe429e.bindPopup(popup_324789f071dc1deb6c8a547f677e66a3)
+        ;
+
+        
+    
+    
+                marker_4c05639d9a1863ce65f7f4dfdefe429e.setIcon(icon_32d7bbb2a99648503890c7c325b996cb);
+            
+    
+            var marker_85cf7ffa8c2b40aba1d13da010c5b18b = L.marker(
+                [69.67886854794241, 18.924602313704195],
+                {
+}
+            ).addTo(map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9);
+        
+    
+            var icon_396c0ad3dfd4c3d4702f314d183f0bbe = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "shopping-cart",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a9af90fe11180a02010f512ece1a6a7e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f28c902f7b1ab7380160ed1a9c74d50f = $(`<div id="html_f28c902f7b1ab7380160ed1a9c74d50f" style="width: 100.0%; height: 100.0%;">     <strong>Tromsø Regionlager</strong><br>     Adresse: Ringvegen 770, 9015 Tromsø<br>     Regionlager for Nord-Norge. Viktig knutepunkt i nord.<br><br>     <strong>ÅDT:</strong> 15 000–20 000 kjøretøy per døgn<br>     <strong>Est. inntjening:</strong> 500,000 kr per dag     </div>`)[0];
+                popup_a9af90fe11180a02010f512ece1a6a7e.setContent(html_f28c902f7b1ab7380160ed1a9c74d50f);
+            
+        
+
+        marker_85cf7ffa8c2b40aba1d13da010c5b18b.bindPopup(popup_a9af90fe11180a02010f512ece1a6a7e)
+        ;
+
+        
+    
+    
+                marker_85cf7ffa8c2b40aba1d13da010c5b18b.setIcon(icon_396c0ad3dfd4c3d4702f314d183f0bbe);
+            
+    
+            var marker_951ee9a6818cb94d4cf32ba3ee059fab = L.marker(
+                [59.9245, 10.8232],
+                {
+}
+            ).addTo(map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9);
+        
+    
+            var icon_f3df1df5ed39c06983a1c1f9ce9cd5d7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "road",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a02449b5764ee8998d06d711c180a16a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_635dae10d61fc5c3c1cce6f102301a41 = $(`<div id="html_635dae10d61fc5c3c1cce6f102301a41" style="width: 100.0%; height: 100.0%;">     <strong>E6 Alnabru, Oslo</strong><br>     <strong>ÅDT:</strong> Over 100 000 kjøretøy per døgn<br>     <strong>Est. inntjening:</strong> 2,500,000 kr per dag     </div>`)[0];
+                popup_a02449b5764ee8998d06d711c180a16a.setContent(html_635dae10d61fc5c3c1cce6f102301a41);
+            
+        
+
+        marker_951ee9a6818cb94d4cf32ba3ee059fab.bindPopup(popup_a02449b5764ee8998d06d711c180a16a)
+        ;
+
+        
+    
+    
+                marker_951ee9a6818cb94d4cf32ba3ee059fab.setIcon(icon_f3df1df5ed39c06983a1c1f9ce9cd5d7);
+            
+    
+            var marker_72ff67e7c5f5407b50cbf5285559c419 = L.marker(
+                [59.9171, 10.675],
+                {
+}
+            ).addTo(map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9);
+        
+    
+            var icon_920d055c936d6216c74b09d3aee1f72b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "road",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4187349e04b881bc3ca34102fa072c07 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_81f0f15a9ad8baa9717b1cdf33c0f6c7 = $(`<div id="html_81f0f15a9ad8baa9717b1cdf33c0f6c7" style="width: 100.0%; height: 100.0%;">     <strong>E18 Skøyen, Bærum</strong><br>     <strong>ÅDT:</strong> Opp mot 90 000 kjøretøy per døgn<br>     <strong>Est. inntjening:</strong> 2,250,000 kr per dag     </div>`)[0];
+                popup_4187349e04b881bc3ca34102fa072c07.setContent(html_81f0f15a9ad8baa9717b1cdf33c0f6c7);
+            
+        
+
+        marker_72ff67e7c5f5407b50cbf5285559c419.bindPopup(popup_4187349e04b881bc3ca34102fa072c07)
+        ;
+
+        
+    
+    
+                marker_72ff67e7c5f5407b50cbf5285559c419.setIcon(icon_920d055c936d6216c74b09d3aee1f72b);
+            
+    
+            var marker_265967fe25cc251f56c1c56bba8cba1d = L.marker(
+                [59.8896, 10.8052],
+                {
+}
+            ).addTo(map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9);
+        
+    
+            var icon_fef1eb9f15eabc60022c57da2d451794 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "road",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f6e9bffb0364a37c50f25a872d252514 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8d140036c4c3727ef6d772b28bf84c33 = $(`<div id="html_8d140036c4c3727ef6d772b28bf84c33" style="width: 100.0%; height: 100.0%;">     <strong>Ring 3 Ryen-krysset, Oslo</strong><br>     <strong>ÅDT:</strong> 70 700 kjøretøy per døgn<br>     <strong>Est. inntjening:</strong> 1,767,500 kr per dag     </div>`)[0];
+                popup_f6e9bffb0364a37c50f25a872d252514.setContent(html_8d140036c4c3727ef6d772b28bf84c33);
+            
+        
+
+        marker_265967fe25cc251f56c1c56bba8cba1d.bindPopup(popup_f6e9bffb0364a37c50f25a872d252514)
+        ;
+
+        
+    
+    
+                marker_265967fe25cc251f56c1c56bba8cba1d.setIcon(icon_fef1eb9f15eabc60022c57da2d451794);
+            
+    
+            var marker_d1b8565777d6e28977a39877682bff40 = L.marker(
+                [63.4051, 10.3918],
+                {
+}
+            ).addTo(map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9);
+        
+    
+            var icon_d418b230313450d4831e310ae7a3a1eb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "road",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a7cf26a6d85aca004e07e7d9aa86dc98 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b2e96c15a06e81cacf1c8060584951b2 = $(`<div id="html_b2e96c15a06e81cacf1c8060584951b2" style="width: 100.0%; height: 100.0%;">     <strong>E6 Sluppen, Trondheim</strong><br>     <strong>ÅDT:</strong> 47 500 kjøretøy per døgn<br>     <strong>Est. inntjening:</strong> 1,187,500 kr per dag     </div>`)[0];
+                popup_a7cf26a6d85aca004e07e7d9aa86dc98.setContent(html_b2e96c15a06e81cacf1c8060584951b2);
+            
+        
+
+        marker_d1b8565777d6e28977a39877682bff40.bindPopup(popup_a7cf26a6d85aca004e07e7d9aa86dc98)
+        ;
+
+        
+    
+    
+                marker_d1b8565777d6e28977a39877682bff40.setIcon(icon_d418b230313450d4831e310ae7a3a1eb);
+            
+    
+            var marker_d523e87536d1289272b69b729afffadb = L.marker(
+                [58.8955, 5.7316],
+                {
+}
+            ).addTo(map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9);
+        
+    
+            var icon_084e93e5b2df65bf8ab7d28ee0160ab3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "road",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e2d82416f013eb98873910704f82e236 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_323f5c7ba05c1d918a9a8f283560dcda = $(`<div id="html_323f5c7ba05c1d918a9a8f283560dcda" style="width: 100.0%; height: 100.0%;">     <strong>E39 Forus, Stavanger</strong><br>     <strong>ÅDT:</strong> Over 57 000 kjøretøy per døgn<br>     <strong>Est. inntjening:</strong> 1,425,000 kr per dag     </div>`)[0];
+                popup_e2d82416f013eb98873910704f82e236.setContent(html_323f5c7ba05c1d918a9a8f283560dcda);
+            
+        
+
+        marker_d523e87536d1289272b69b729afffadb.bindPopup(popup_e2d82416f013eb98873910704f82e236)
+        ;
+
+        
+    
+    
+                marker_d523e87536d1289272b69b729afffadb.setIcon(icon_084e93e5b2df65bf8ab7d28ee0160ab3);
+            
+    
+            var marker_0ed3d8cb00950e4f5c4c6016935007ae = L.marker(
+                [60.2962, 5.3479],
+                {
+}
+            ).addTo(map_3d615f9e9b0ba5ca0ea3f5c3b9fe9ac9);
+        
+    
+            var icon_222b52618d09f25017bfb2d2d086ecda = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "road",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1b990bea81f8913ddfc305d1b542dd49 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a28489effdc2722ea1d35f4ce92136b3 = $(`<div id="html_a28489effdc2722ea1d35f4ce92136b3" style="width: 100.0%; height: 100.0%;">     <strong>E39 Lagunen, Bergen</strong><br>     <strong>ÅDT:</strong> Ukjent<br>     <strong>Est. inntjening:</strong> Estimert basert på lokasjon     </div>`)[0];
+                popup_1b990bea81f8913ddfc305d1b542dd49.setContent(html_a28489effdc2722ea1d35f4ce92136b3);
+            
+        
+
+        marker_0ed3d8cb00950e4f5c4c6016935007ae.bindPopup(popup_1b990bea81f8913ddfc305d1b542dd49)
+        ;
+
+        
+    
+    
+                marker_0ed3d8cb00950e4f5c4c6016935007ae.setIcon(icon_222b52618d09f25017bfb2d2d086ecda);
+            
+</script>
+</html>
