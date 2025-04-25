@@ -1,93 +1,121 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-    <meta charset="UTF-8">
-    <title>Coop Lager og CoopGo – Interaktiv</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        input { margin: 5px; }
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background-color: #f0f0f0; }
-        label { font-weight: bold; margin-right: 10px; }
-        .filter-container {
-            margin-top: 20px;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>CoopKart – Interaktiv Visning</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .container { display: flex; flex-wrap: wrap; gap: 20px; }
+    .venstre { flex: 1 1 50%; }
+    .hoyre { flex: 1 1 50%; }
+    input[type="number"], input[type="checkbox"] { margin: 5px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #f0f0f0; }
+    .filter-container { margin: 15px 0; padding: 10px; background-color: #f9f9f9; border: 1px solid #ccc; }
+  </style>
 </head>
 <body>
 
 <h1>Coop Lager og CoopGo – Interaktiv Oversikt</h1>
 
-<iframe src="coop_lagerkart_oppdatert.html" width="100%" height="600" style="border:none; margin-top: 20px;"></iframe>
+<div class="container">
+  <div class="venstre">
+    <iframe id="kartIframe" src="coop_lagerkart_alle.html" width="100%" height="600" style="border:none;"></iframe>
+  </div>
 
-<div class="filter-container">
-    <label for="prosent">Prosentandel (f.eks. 5):</label>
-    <input type="number" id="prosent" value="5" min="1" max="20"> %
+  <div class="hoyre">
+    <div class="filter-container">
+      <label for="prosent">Prosentandel:</label>
+      <input type="number" id="prosent" value="5" min="1" max="20"> %
+      <label for="kr">Verdi per kunde:</label>
+      <input type="number" id="kr" value="500" min="100" max="1000"> kr <br><br>
 
-    <label for="kr">Verdi per kunde:</label>
-    <input type="number" id="kr" value="500" min="100" max="1000"> kr
+      <input type="checkbox" id="visLager" checked>
+      <label for="visLager">Vis Coop Lager</label>
+
+      <input type="checkbox" id="visCoopGo" checked>
+      <label for="visCoopGo">Vis CoopGo-stasjoner</label>
+    </div>
+
+    <div id="tabeller"></div>
+  </div>
 </div>
-
-<div id="tabeller"></div>
 
 <script>
 const lagerData = [
-    { navn: "C-Log (Gardermoen)", adresse: "Vilbergvegen 130, 2067 Jessheim", adt: "50 000" },
-    { navn: "Langhus (Viken)", adresse: "Regnbueveien 5, 1405 Langhus", adt: "40 000" },
-    { navn: "Trondheim Regionlager", adresse: "Østre Rosten 108, 7075 Tiller", adt: "27 500" },
-    { navn: "Stavanger Regionlager", adresse: "Nesflåtveien 4, 4018 Stavanger", adt: "22 500" },
-    { navn: "Bergen Regionlager", adresse: "Sandbrekkevegen 81, 5225 Nesttun", adt: "32 500" },
-    { navn: "Tromsø Regionlager", adresse: "Ringvegen 770, 9015 Tromsø", adt: "17 500" },
+  { navn: "C-Log (Gardermoen)", adresse: "Vilbergvegen 130, 2067 Jessheim", adt: "50 000" },
+  { navn: "Langhus (Viken)", adresse: "Regnbueveien 5, 1405 Langhus", adt: "40 000" },
+  { navn: "Trondheim Regionlager", adresse: "Østre Rosten 108, 7075 Tiller", adt: "27 500" },
+  { navn: "Stavanger Regionlager", adresse: "Nesflåtveien 4, 4018 Stavanger", adt: "22 500" },
+  { navn: "Bergen Regionlager", adresse: "Sandbrekkevegen 81, 5225 Nesttun", adt: "32 500" },
+  { navn: "Tromsø Regionlager", adresse: "Ringvegen 770, 9015 Tromsø", adt: "17 500" },
 ];
 
 const coopgoData = [
-    { navn: "E6 Alnabru, Oslo", adt: "100 000" },
-    { navn: "E18 Skøyen, Bærum", adt: "90 000" },
-    { navn: "Ring 3 Ryen-krysset, Oslo", adt: "70 700" },
-    { navn: "E6 Sluppen, Trondheim", adt: "47 500" },
-    { navn: "E39 Forus, Stavanger", adt: "57 000" },
-    { navn: "E39 Lagunen, Bergen", adt: "Ukjent" },
+  { navn: "E6 Alnabru, Oslo", adt: "100 000" },
+  { navn: "E18 Skøyen, Bærum", adt: "90 000" },
+  { navn: "Ring 3 Ryen-krysset, Oslo", adt: "70 700" },
+  { navn: "E6 Sluppen, Trondheim", adt: "47 500" },
+  { navn: "E39 Forus, Stavanger", adt: "57 000" },
+  { navn: "E39 Lagunen, Bergen", adt: "Ukjent" },
 ];
 
 function formater(kr) {
-    return kr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " kr";
+  return kr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " kr";
 }
 
 function visTabeller() {
-    const prosent = parseFloat(document.getElementById("prosent").value) || 0;
-    const kr = parseFloat(document.getElementById("kr").value) || 0;
+  const prosent = parseFloat(document.getElementById("prosent").value) || 0;
+  const kr = parseFloat(document.getElementById("kr").value) || 0;
+  const visLager = document.getElementById("visLager").checked;
+  const visCoopGo = document.getElementById("visCoopGo").checked;
 
-    let html = "<h2>Coop Lagerlokasjoner</h2><table><tr><th>Navn</th><th>Adresse</th><th>ÅDT</th><th>Inntjening: ÅDT × prosent × kr</th></tr>";
+  let html = "";
+
+  if (visLager) {
+    html += "<h2>Coop Lagerlokasjoner</h2><table><tr><th>Navn</th><th>Adresse</th><th>ÅDT</th><th>Inntjening: ÅDT × prosent × kr</th></tr>";
     lagerData.forEach(item => {
-        const adt = parseInt(item.adt.replace(/\s/g, ""));
-        const inntjening = formater(adt * (prosent / 100) * kr);
-        html += `<tr><td>${item.navn}</td><td>${item.adresse}</td><td>${item.adt}</td><td>${inntjening}</td></tr>`;
+      const adt = parseInt(item.adt.replace(/\s/g, ""));
+      const inntjening = formater(adt * (prosent / 100) * kr);
+      html += `<tr><td>${item.navn}</td><td>${item.adresse}</td><td>${item.adt}</td><td>${inntjening}</td></tr>`;
     });
     html += "</table>";
+  }
 
+  if (visCoopGo) {
     html += "<h2>Ønskede CoopGo-stasjoner</h2><table><tr><th>Navn</th><th>ÅDT</th><th>Inntjening: ÅDT × prosent × kr</th></tr>";
     coopgoData.forEach(item => {
-        if (item.adt === "Ukjent") {
-            html += `<tr><td>${item.navn}</td><td>Ukjent</td><td>Estimert</td></tr>`;
-        } else {
-            const adt = parseInt(item.adt.replace(/\s/g, ""));
-            const inntjening = formater(adt * (prosent / 100) * kr);
-            html += `<tr><td>${item.navn}</td><td>${item.adt}</td><td>${inntjening}</td></tr>`;
-        }
+      if (item.adt === "Ukjent") {
+        html += `<tr><td>${item.navn}</td><td>Ukjent</td><td>Estimert</td></tr>`;
+      } else {
+        const adt = parseInt(item.adt.replace(/\s/g, ""));
+        const inntjening = formater(adt * (prosent / 100) * kr);
+        html += `<tr><td>${item.navn}</td><td>${item.adt}</td><td>${inntjening}</td></tr>`;
+      }
     });
     html += "</table>";
+  }
 
-    document.getElementById("tabeller").innerHTML = html;
+  document.getElementById("tabeller").innerHTML = html;
+
+  // Skift kart etter filter
+  const iframe = document.getElementById("kartIframe");
+  if (visLager && visCoopGo) {
+    iframe.src = "coop_lagerkart_alle.html";
+  } else if (visLager) {
+    iframe.src = "coop_lagerkart_lager.html";
+  } else if (visCoopGo) {
+    iframe.src = "coop_lagerkart_coopgo.html";
+  } else {
+    iframe.src = "";
+  }
 }
 
-// Oppdater tabeller ved endring
-document.getElementById("prosent").addEventListener("input", visTabeller);
-document.getElementById("kr").addEventListener("input", visTabeller);
+// Event listeners
+["prosent", "kr", "visLager", "visCoopGo"].forEach(id =>
+  document.getElementById(id).addEventListener("input", visTabeller)
+);
 
 // Init
 visTabeller();
