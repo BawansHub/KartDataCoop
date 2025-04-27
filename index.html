@@ -78,7 +78,7 @@ const coopgoData = [
 
 // Formatering av beløp (to desimaler + tusenskiller)
 function formater(kr) {
-    return kr.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " kr";
+    return Math.round(kr).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " kr";
 }
 
 // Formatering av antall kunder (ingen desimaler + tusenskiller)
