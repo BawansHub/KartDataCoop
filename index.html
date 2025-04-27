@@ -56,6 +56,7 @@
 </div>
 
 <script>
+// Data for lagerlokasjoner
 const lagerData = [
     { navn: "C-Log (Gardermoen)", adresse: "Vilbergvegen 130, 2067 Jessheim", adt: "50 000" },
     { navn: "Langhus (Viken)", adresse: "Regnbueveien 5, 1405 Langhus", adt: "40 000" },
@@ -65,6 +66,7 @@ const lagerData = [
     { navn: "Tromsø Regionlager", adresse: "Ringvegen 770, 9015 Tromsø", adt: "17 500" },
 ];
 
+// Data for foreslåtte CoopGo-stasjoner
 const coopgoData = [
     { navn: "E6 Alnabru, Oslo", adt: "100 000" },
     { navn: "E18 Lysaker, Bærum", adt: "90 000" },
@@ -74,31 +76,52 @@ const coopgoData = [
     { navn: "E39 Lagunen, Bergen", adt: "Ukjent" },
 ];
 
+// Formatering av beløp (to desimaler + tusenskiller)
 function formater(kr) {
     return kr.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " kr";
 }
 
+// Formatering av antall kunder (ingen desimaler + tusenskiller)
+function formaterAntall(verdi) {
+    return Math.round(verdi).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+}
 
+// Funksjon for å vise tabellene
 function visTabeller() {
     const prosent = parseFloat(document.getElementById("prosent").value) || 0;
     const kr = parseFloat(document.getElementById("kr").value) || 0;
 
-    let html = "<h2>Coop Lagerlokasjoner</h2><table><tr><th>Navn</th><th>Adresse</th><th>ÅDT</th><th>Inntjening: ÅDT × prosent × kr</th></tr>";
+    let html = "<h2>Coop Lagerlokasjoner</h2><table><tr><th>Navn</th><th>Adresse</th><th>ÅDT</th><th>Antall kunder (ÅDT × prosent)</th><th>Inntjening: ÅDT × prosent × kr</th></tr>";
+    
     lagerData.forEach(item => {
         const adt = parseInt(item.adt.replace(/\s/g, ""));
-        const inntjening = formater(adt * (prosent / 100) * kr);
-        html += `<tr><td>${item.navn}</td><td>${item.adresse}</td><td>${item.adt}</td><td>${inntjening}</td></tr>`;
+        const antallKunder = adt * (prosent / 100);
+        const inntjening = antallKunder * kr;
+        html += `<tr>
+                    <td>${item.navn}</td>
+                    <td>${item.adresse}</td>
+                    <td>${item.adt}</td>
+                    <td>${formaterAntall(antallKunder)}</td>
+                    <td>${formater(inntjening)}</td>
+                </tr>`;
     });
     html += "</table>";
 
-    html += "<h2>Ønskede CoopGo-stasjoner</h2><table><tr><th>Navn</th><th>ÅDT</th><th>Inntjening: ÅDT × prosent × kr</th></tr>";
+    html += "<h2>Ønskede CoopGo-stasjoner</h2><table><tr><th>Navn</th><th>ÅDT</th><th>Antall kunder (ÅDT × prosent)</th><th>Inntjening: ÅDT × prosent × kr</th></tr>";
+
     coopgoData.forEach(item => {
         if (item.adt === "Ukjent") {
-            html += `<tr><td>${item.navn}</td><td>Ukjent</td><td>Estimert</td></tr>`;
+            html += `<tr><td>${item.navn}</td><td>Ukjent</td><td>Estimert</td><td>Estimert</td></tr>`;
         } else {
             const adt = parseInt(item.adt.replace(/\s/g, ""));
-            const inntjening = formater(adt * (prosent / 100) * kr);
-            html += `<tr><td>${item.navn}</td><td>${item.adt}</td><td>${inntjening}</td></tr>`;
+            const antallKunder = adt * (prosent / 100);
+            const inntjening = antallKunder * kr;
+            html += `<tr>
+                        <td>${item.navn}</td>
+                        <td>${item.adt}</td>
+                        <td>${formaterAntall(antallKunder)}</td>
+                        <td>${formater(inntjening)}</td>
+                    </tr>`;
         }
     });
     html += "</table>";
@@ -110,7 +133,7 @@ function visTabeller() {
 document.getElementById("prosent").addEventListener("input", visTabeller);
 document.getElementById("kr").addEventListener("input", visTabeller);
 
-// Init
+// Initielt kall for å vise tabeller
 visTabeller();
 </script>
 
