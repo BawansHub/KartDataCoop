@@ -75,8 +75,9 @@ const coopgoData = [
 ];
 
 function formater(kr) {
-    return kr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " kr";
+    return kr.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " kr";
 }
+
 
 function visTabeller() {
     const prosent = parseFloat(document.getElementById("prosent").value) || 0;
