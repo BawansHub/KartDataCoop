@@ -102,8 +102,8 @@ function visTabeller() {
         const adtHalv = adt / 2;
         const antallKunder = adtHalv * (prosent / 100);
         const inntjeningDag = antallKunder * kr;
-        const inntjeningUke = inntjeningDag * 7;
-        const inntjeningMnd = inntjeningDag * 30;
+        const inntjeningUke = inntjeningDag * 6;     // Endret til 6
+        const inntjeningMnd = inntjeningUke * 4;     // Endret til uke × 4
         const inntjeningAar = inntjeningDag * apningsdager;
         html += `<tr>
                     <td>${item.navn}</td>
@@ -129,8 +129,8 @@ function visTabeller() {
             const adtHalv = adt / 2;
             const antallKunder = adtHalv * (prosent / 100);
             const inntjeningDag = antallKunder * kr;
-            const inntjeningUke = inntjeningDag * 7;
-            const inntjeningMnd = inntjeningDag * 30;
+            const inntjeningUke = inntjeningDag * 6;     // Endret til 6
+            const inntjeningMnd = inntjeningUke * 4;     // Endret til uke × 4
             const inntjeningAar = inntjeningDag * apningsdager;
             html += `<tr>
                         <td>${item.navn}</td>
