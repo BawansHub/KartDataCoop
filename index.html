@@ -36,16 +36,14 @@
 <h1>Coop Lager og CoopGo – Interaktiv Oversikt</h1>
 
 <div class="container">
-    <!-- Kart i venstre kolonne -->
     <div class="venstre">
         <iframe src="coop_lagerkart_oppdatert.html" width="100%" height="600" style="border:none;"></iframe>
     </div>
 
-    <!-- Tabeller og filter i høyre kolonne -->
     <div class="hoyre">
         <div class="filter-container">
-            <label for="prosent">Prosentandel (f.eks. 1):</label>
-            <input type="number" id="prosent" value="1" min="0" step="0.1"> %
+            <label for="prosent">Ukentlig markedsandel (f.eks. 5):</label>
+            <input type="number" id="prosent" value="5" min="0" step="0.1"> %
 
             <label for="kr">Forbruk per kunde per uke:</label>
             <input type="number" id="kr" value="1500" min="0"> kr
@@ -96,17 +94,16 @@ function visTabeller() {
     const kr = parseFloat(document.getElementById("kr").value) || 0;
     const apningsdager = parseInt(document.getElementById("apningsdager").value) || 0;
 
-    let html = "<h2>Coop Lagerlokasjoner</h2><table><tr><th>Navn</th><th>Adresse</th><th>ÅDT</th><th>ÅDT/2</th><th>Antall kunder</th><th>Markedsandel</th><th>Omsetning per dag</th><th>Per uke</th><th>Per måned</th><th>Årlig omsetning</th></tr>";
+    let html = "<h2>Coop Lagerlokasjoner</h2><table><tr><th>Navn</th><th>Adresse</th><th>ÅDT</th><th>ÅDT/2</th><th>Antall kunder per dag</th><th>Markedsandel</th><th>Omsetning per dag</th><th>Per uke</th><th>Per måned</th><th>Årlig omsetning</th></tr>";
 
     lagerData.forEach(item => {
         const adt = parseInt(item.adt.replace(/\s/g, ""));
         const adtHalv = adt / 2;
-        const antallKunder = (adtHalv * prosent) / (6 * 100);;
-        const inntjeningDag = antallKunder * kr;
-        const inntjeningUke = inntjeningDag * 6;
-        const inntjeningMnd = inntjeningUke * 4;
-        const inntjeningAar = inntjeningDag * apningsdager;
-        const markedsandel = (antallKunder * 6) / adtHalv * 100;
+        const antallKunder = (adtHalv * prosent) / (6 * 100);
+        const omsetningDag = antallKunder * kr;
+        const omsetningUke = omsetningDag * 6;
+        const omsetningMnd = omsetningUke * 4;
+        const omsetningAar = omsetningDag * apningsdager;
 
         html += `<tr>
                     <td>${item.navn}</td>
@@ -114,16 +111,16 @@ function visTabeller() {
                     <td>${formaterAntall(adt)}</td>
                     <td>${formaterAntall(adtHalv)}</td>
                     <td>${formaterAntall(antallKunder)}</td>
-                    <td>${formaterProsent(markedsandel)}</td>
-                    <td>${formater(inntjeningDag)}</td>
-                    <td>${formater(inntjeningUke)}</td>
-                    <td>${formater(inntjeningMnd)}</td>
-                    <td><strong>${formater(inntjeningAar)}</strong></td>
+                    <td>${formaterProsent(prosent)}</td>
+                    <td>${formater(omsetningDag)}</td>
+                    <td>${formater(omsetningUke)}</td>
+                    <td>${formater(omsetningMnd)}</td>
+                    <td><strong>${formater(omsetningAar)}</strong></td>
                 </tr>`;
     });
     html += "</table>";
 
-    html += "<h2>Ønskede CoopGo-stasjoner</h2><table><tr><th>Navn</th><th>ÅDT</th><th>ÅDT/2</th><th>Antall kunder</th><th>Markedsandel</th><th>Omsetning per dag</th><th>Per uke</th><th>Per måned</th><th>Årlig omsetning</th></tr>";
+    html += "<h2>Ønskede CoopGo-stasjoner</h2><table><tr><th>Navn</th><th>ÅDT</th><th>ÅDT/2</th><th>Antall kunder per dag</th><th>Markedsandel</th><th>Omsetning per dag</th><th>Per uke</th><th>Per måned</th><th>Årlig omsetning</th></tr>";
 
     coopgoData.forEach(item => {
         if (item.adt === "Ukjent") {
@@ -131,23 +128,22 @@ function visTabeller() {
         } else {
             const adt = parseInt(item.adt.replace(/\s/g, ""));
             const adtHalv = adt / 2;
-            const antallKunder = adtHalv * (prosent / 100);
-            const inntjeningDag = antallKunder * kr;
-            const inntjeningUke = inntjeningDag * 6;
-            const inntjeningMnd = inntjeningUke * 4;
-            const inntjeningAar = inntjeningDag * apningsdager;
-            const markedsandel = (antallKunder * 6) / adtHalv * 100;
+            const antallKunder = (adtHalv * prosent) / (6 * 100);
+            const omsetningDag = antallKunder * kr;
+            const omsetningUke = omsetningDag * 6;
+            const omsetningMnd = omsetningUke * 4;
+            const omsetningAar = omsetningDag * apningsdager;
 
             html += `<tr>
                         <td>${item.navn}</td>
                         <td>${formaterAntall(adt)}</td>
                         <td>${formaterAntall(adtHalv)}</td>
                         <td>${formaterAntall(antallKunder)}</td>
-                        <td>${formaterProsent(markedsandel)}</td>
-                        <td>${formater(inntjeningDag)}</td>
-                        <td>${formater(inntjeningUke)}</td>
-                        <td>${formater(inntjeningMnd)}</td>
-                        <td><strong>${formater(inntjeningAar)}</strong></td>
+                        <td>${formaterProsent(prosent)}</td>
+                        <td>${formater(omsetningDag)}</td>
+                        <td>${formater(omsetningUke)}</td>
+                        <td>${formater(omsetningMnd)}</td>
+                        <td><strong>${formater(omsetningAar)}</strong></td>
                     </tr>`;
         }
     });
