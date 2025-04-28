@@ -1,542 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    
-        <script>
-            L_NO_TOUCH = false;
-            L_DISABLE_3D = false;
-        </script>
-    
-    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
-    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Coop Kart</title>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
+
+    <!-- Awesome Markers -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
-    
-            <meta name="viewport" content="width=device-width,
-                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-            <style>
-                #map_794149aa39d54fe0e1a280c3a330caf5 {
-                    position: relative;
-                    width: 100.0%;
-                    height: 100.0%;
-                    left: 0.0%;
-                    top: 0.0%;
-                }
-                .leaflet-container { font-size: 1rem; }
-            </style>
-        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+
+    <style>
+        html, body { width: 100%; height: 100%; margin: 0; padding: 0; }
+        #map { width: 100%; height: 100%; }
+        .leaflet-container { font-size: 1rem; }
+    </style>
 </head>
+
 <body>
-    
-    
-            <div class="folium-map" id="map_794149aa39d54fe0e1a280c3a330caf5" ></div>
-        
+    <div id="map"></div>
+
+    <script>
+        // Opprett kartet
+        var map = L.map('map', {
+            center: [63.4, 10.4],
+            zoom: 5
+        });
+
+        // Legg til OpenStreetMap tiles
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Funksjon for å lage grønne lager-markører
+        function lagGrønnMarkør(lat, lon, navn, adresse, beskrivelse) {
+            var ikon = L.AwesomeMarkers.icon({
+                icon: 'shopping-cart',
+                markerColor: 'green',
+                prefix: 'fa'
+            });
+            var popupInnhold = `<strong>${navn}</strong><br>Adresse: ${adresse}<br>${beskrivelse}`;
+            L.marker([lat, lon], {icon: ikon}).addTo(map).bindPopup(popupInnhold);
+        }
+
+        // Funksjon for å lage røde CoopGo-markører
+        function lagRødMarkør(lat, lon, navn) {
+            var ikon = L.AwesomeMarkers.icon({
+                icon: 'road',
+                markerColor: 'red',
+                prefix: 'fa'
+            });
+            var popupInnhold = `<strong>${navn}</strong>`;
+            L.marker([lat, lon], {icon: ikon}).addTo(map).bindPopup(popupInnhold);
+        }
+
+        // Lager-data
+        lagGrønnMarkør(60.18024, 11.15888, "C-Log (Gardermoen)", "Vilbergvegen 130, 2067 Jessheim", "Hovedlager, høy trafikk, moderne og automatisert. Nær E6 og Oslo Lufthavn.");
+        lagGrønnMarkør(59.77134, 10.84257, "Langhus (Viken)", "Regnbueveien 5, 1405 Langhus", "Automatisert logistikksenter nær E6, sør for Oslo.");
+        lagGrønnMarkør(63.34117, 10.36926, "Trondheim Regionlager", "Østre Rosten 108, 7075 Tiller", "Regionlager for Midt-Norge. God tilgjengelighet til E6.");
+        lagGrønnMarkør(58.93242, 5.74250, "Stavanger Regionlager", "Nesflåtveien 4, 4018 Stavanger", "Regionlager for Sørvestlandet. Ligger i trafikkert næringsområde.");
+        lagGrønnMarkør(60.32526, 5.36337, "Bergen Regionlager", "Sandbrekkevegen 81, 5225 Nesttun", "Regionlager med god tilgang til hovedveinettet i Bergen.");
+        lagGrønnMarkør(69.67887, 18.92460, "Tromsø Regionlager", "Ringvegen 770, 9015 Tromsø", "Regionlager for Nord-Norge. Viktig knutepunkt i nord.");
+
+        // CoopGo-stasjoner
+        lagRødMarkør(59.9245, 10.8232, "E6 Alnabru, Oslo");
+        lagRødMarkør(59.910193, 10.623905, "E18 Lysaker, Bærum");
+        lagRødMarkør(59.8896, 10.8052, "Ring 3 Ryen-krysset, Oslo");
+        lagRødMarkør(63.396208, 10.392311, "E6 Sluppen, Trondheim");
+        lagRødMarkør(58.8955, 5.7316, "E39 Forus, Stavanger");
+        lagRødMarkør(60.2962, 5.3479, "E39 Lagunen, Bergen");
+    </script>
 </body>
-<script>
-    
-    
-            var map_794149aa39d54fe0e1a280c3a330caf5 = L.map(
-                "map_794149aa39d54fe0e1a280c3a330caf5",
-                {
-                    center: [63.4, 10.4],
-                    crs: L.CRS.EPSG3857,
-                    ...{
-  "zoom": 5,
-  "zoomControl": true,
-  "preferCanvas": false,
-}
-
-                }
-            );
-
-            
-
-        
-    
-            var tile_layer_6b6217a63519cf12e5ab232eba977120 = L.tileLayer(
-                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-                {
-  "minZoom": 0,
-  "maxZoom": 19,
-  "maxNativeZoom": 19,
-  "noWrap": false,
-  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
-  "subdomains": "abc",
-  "detectRetina": false,
-  "tms": false,
-  "opacity": 1,
-}
-
-            );
-        
-    
-            tile_layer_6b6217a63519cf12e5ab232eba977120.addTo(map_794149aa39d54fe0e1a280c3a330caf5);
-        
-    
-            var marker_5a8b4ec302866ad048e08927773939b4 = L.marker(
-                [60.18024352472979, 11.158885611257535],
-                {
-}
-            ).addTo(map_794149aa39d54fe0e1a280c3a330caf5);
-        
-    
-            var icon_9c03667b2117237c9794114029107037 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "green",
-  "iconColor": "white",
-  "icon": "shopping-cart",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_60d2253e33edf55e01aa74890b21ec9d = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_71f932710c97b6ccbb3ccc6c0bebb456 = $(`<div id="html_71f932710c97b6ccbb3ccc6c0bebb456" style="width: 100.0%; height: 100.0%;">     <strong>C-Log (Gardermoen)</strong><br>     Adresse: Vilbergvegen 130, 2067 Jessheim<br>     Hovedlager, høy trafikk, moderne og automatisert. Nær E6 og Oslo Lufthavn.<br><br>      </div>`)[0];
-                popup_60d2253e33edf55e01aa74890b21ec9d.setContent(html_71f932710c97b6ccbb3ccc6c0bebb456);
-            
-        
-
-        marker_5a8b4ec302866ad048e08927773939b4.bindPopup(popup_60d2253e33edf55e01aa74890b21ec9d)
-        ;
-
-        
-    
-    
-                marker_5a8b4ec302866ad048e08927773939b4.setIcon(icon_9c03667b2117237c9794114029107037);
-            
-    
-            var marker_d3d4d2fe57fcb10bc9ccb0f32b905dd0 = L.marker(
-                [59.77134150117978, 10.842567540069313],
-                {
-}
-            ).addTo(map_794149aa39d54fe0e1a280c3a330caf5);
-        
-    
-            var icon_e0812ba13d2ba27b1fbdd522782c5aff = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "green",
-  "iconColor": "white",
-  "icon": "shopping-cart",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_0b080a57970a9abf03275e2f41e7170a = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_442ce3e2bb5ae109847e1821b6928633 = $(`<div id="html_442ce3e2bb5ae109847e1821b6928633" style="width: 100.0%; height: 100.0%;">     <strong>Langhus (Viken)</strong><br>     Adresse: Regnbueveien 5, 1405 Langhus<br>     Automatisert logistikksenter nær E6, sør for Oslo.<br><br>        </div>`)[0];
-                popup_0b080a57970a9abf03275e2f41e7170a.setContent(html_442ce3e2bb5ae109847e1821b6928633);
-            
-        
-
-        marker_d3d4d2fe57fcb10bc9ccb0f32b905dd0.bindPopup(popup_0b080a57970a9abf03275e2f41e7170a)
-        ;
-
-        
-    
-    
-                marker_d3d4d2fe57fcb10bc9ccb0f32b905dd0.setIcon(icon_e0812ba13d2ba27b1fbdd522782c5aff);
-            
-    
-            var marker_d368ea2aad58d8a4a20e10f22d9e8e5b = L.marker(
-                [63.341171780178996, 10.36926375562959],
-                {
-}
-            ).addTo(map_794149aa39d54fe0e1a280c3a330caf5);
-        
-    
-            var icon_6758bfea1413b07ed78086f526169b70 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "green",
-  "iconColor": "white",
-  "icon": "shopping-cart",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_e1af87fff042979db22666fe7ed928ec = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_4950264c811bce910d68e085af2f7e93 = $(`<div id="html_4950264c811bce910d68e085af2f7e93" style="width: 100.0%; height: 100.0%;">     <strong>Trondheim Regionlager</strong><br>     Adresse: Østre Rosten 108, 7075 Tiller<br>     Regionlager for Midt-Norge. God tilgjengelighet til E6.<br><br>      </div>`)[0];
-                popup_e1af87fff042979db22666fe7ed928ec.setContent(html_4950264c811bce910d68e085af2f7e93);
-            
-        
-
-        marker_d368ea2aad58d8a4a20e10f22d9e8e5b.bindPopup(popup_e1af87fff042979db22666fe7ed928ec)
-        ;
-
-        
-    
-    
-                marker_d368ea2aad58d8a4a20e10f22d9e8e5b.setIcon(icon_6758bfea1413b07ed78086f526169b70);
-            
-    
-            var marker_9b16521a2d121bc26ba3bb919d7b9c67 = L.marker(
-                [58.93242369678288, 5.742498482347647],
-                {
-}
-            ).addTo(map_794149aa39d54fe0e1a280c3a330caf5);
-        
-    
-            var icon_61c9bb1f90f8c495858c3ace292c8c7b = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "green",
-  "iconColor": "white",
-  "icon": "shopping-cart",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_fc32f3065b10c65ec38f72a0532e887f = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_acdf7b73f12548ee48d5ab720c8d52fb = $(`<div id="html_acdf7b73f12548ee48d5ab720c8d52fb" style="width: 100.0%; height: 100.0%;">     <strong>Stavanger Regionlager</strong><br>     Adresse: Nesflåtveien 4, 4018 Stavanger<br>     Regionlager for Sørvestlandet. Ligger i trafikkert næringsområde.<br><br>     <strong>ÅDT:</strong> 20 000–25 000 kjøretøy per døgn<br>     </div>`)[0];
-                popup_fc32f3065b10c65ec38f72a0532e887f.setContent(html_acdf7b73f12548ee48d5ab720c8d52fb);
-            
-        
-
-        marker_9b16521a2d121bc26ba3bb919d7b9c67.bindPopup(popup_fc32f3065b10c65ec38f72a0532e887f)
-        ;
-
-        
-    
-    
-                marker_9b16521a2d121bc26ba3bb919d7b9c67.setIcon(icon_61c9bb1f90f8c495858c3ace292c8c7b);
-            
-    
-            var marker_859c1d2df39ee55a800d5d055f43906d = L.marker(
-                [60.32525961860274, 5.363368011266229],
-                {
-}
-            ).addTo(map_794149aa39d54fe0e1a280c3a330caf5);
-        
-    
-            var icon_d15ea66f7226596db68f69d4bb7d2916 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "green",
-  "iconColor": "white",
-  "icon": "shopping-cart",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_62f41b989ac75499a2e3e8850d834c52 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_cc7bc9fb1bd6f0c276d268713e5377bf = $(`<div id="html_cc7bc9fb1bd6f0c276d268713e5377bf" style="width: 100.0%; height: 100.0%;">     <strong>Bergen Regionlager</strong><br>     Adresse: Sandbrekkevegen 81, 5225 Nesttun<br>     Regionlager med god tilgang til hovedveinettet i Bergen.<br><br>     </div>`)[0];
-                popup_62f41b989ac75499a2e3e8850d834c52.setContent(html_cc7bc9fb1bd6f0c276d268713e5377bf);
-            
-        
-
-        marker_859c1d2df39ee55a800d5d055f43906d.bindPopup(popup_62f41b989ac75499a2e3e8850d834c52)
-        ;
-
-        
-    
-    
-                marker_859c1d2df39ee55a800d5d055f43906d.setIcon(icon_d15ea66f7226596db68f69d4bb7d2916);
-            
-    
-            var marker_04501ea893a5c52e7ae7beaf9353006f = L.marker(
-                [69.67886854794241, 18.924602313704195],
-                {
-}
-            ).addTo(map_794149aa39d54fe0e1a280c3a330caf5);
-        
-    
-            var icon_5bede5ff00cd5c3825cc8aa91deb7a4b = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "green",
-  "iconColor": "white",
-  "icon": "shopping-cart",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_68eac7d1dbcd95a0719da57ec6385696 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_c3983416201c32bc9baae9a5ce66598c = $(`<div id="html_c3983416201c32bc9baae9a5ce66598c" style="width: 100.0%; height: 100.0%;">     <strong>Tromsø Regionlager</strong><br>     Adresse: Ringvegen 770, 9015 Tromsø<br>     Regionlager for Nord-Norge. Viktig knutepunkt i nord.<br><br>    </div>`)[0];
-                popup_68eac7d1dbcd95a0719da57ec6385696.setContent(html_c3983416201c32bc9baae9a5ce66598c);
-            
-        
-
-        marker_04501ea893a5c52e7ae7beaf9353006f.bindPopup(popup_68eac7d1dbcd95a0719da57ec6385696)
-        ;
-
-        
-    
-    
-                marker_04501ea893a5c52e7ae7beaf9353006f.setIcon(icon_5bede5ff00cd5c3825cc8aa91deb7a4b);
-            
-    
-            var marker_136ebe9b07b5030af9952c9fc0b7ff15 = L.marker(
-                [59.9245, 10.8232],
-                {
-}
-            ).addTo(map_794149aa39d54fe0e1a280c3a330caf5);
-        
-    
-            var icon_e23b7764b42d2b3dc8193fce6389fee2 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "road",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_5d2a903b6cdabb7cf89bdaa265e1960a = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_a64c3e910452513a969ec893966d7106 = $(`<div id="html_a64c3e910452513a969ec893966d7106" style="width: 100.0%; height: 100.0%;">     <strong>E6 Alnabru, Oslo</strong><br>    </div>`)[0];
-                popup_5d2a903b6cdabb7cf89bdaa265e1960a.setContent(html_a64c3e910452513a969ec893966d7106);
-            
-        
-
-        marker_136ebe9b07b5030af9952c9fc0b7ff15.bindPopup(popup_5d2a903b6cdabb7cf89bdaa265e1960a)
-        ;
-
-        
-    
-    
-                marker_136ebe9b07b5030af9952c9fc0b7ff15.setIcon(icon_e23b7764b42d2b3dc8193fce6389fee2);
-            
-    
-            var marker_66fe676949ca298b192679457d5e31f8 = L.marker(
-                [59.910193, 10.623905],
-                {
-}
-            ).addTo(map_794149aa39d54fe0e1a280c3a330caf5);
-        
-    
-            var icon_193f2ee0e5bc675c16efbdee3679d0b1 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "road",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_19be21745445691835d2882aec727a3c = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_f960482f6f9c08ade455e392be972ae1 = $(`<div id="html_f960482f6f9c08ade455e392be972ae1" style="width: 100.0%; height: 100.0%;">     <strong>E18 Lysaker, Bærum</strong><br>     </div>`)[0];
-                popup_19be21745445691835d2882aec727a3c.setContent(html_f960482f6f9c08ade455e392be972ae1);
-            
-        
-
-        marker_66fe676949ca298b192679457d5e31f8.bindPopup(popup_19be21745445691835d2882aec727a3c)
-        ;
-
-        
-    
-    
-                marker_66fe676949ca298b192679457d5e31f8.setIcon(icon_193f2ee0e5bc675c16efbdee3679d0b1);
-            
-    
-            var marker_238b2f9e4eab4953369c97f0d7d9f0ed = L.marker(
-                [59.8896, 10.8052],
-                {
-}
-            ).addTo(map_794149aa39d54fe0e1a280c3a330caf5);
-        
-    
-            var icon_500c9bcb102c9ccea6289a6ca7b8fbf4 = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "road",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_243fcad4e90a8a3e2cfe928343646360 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_341e96cf304af9360d431aa2fb363251 = $(`<div id="html_341e96cf304af9360d431aa2fb363251" style="width: 100.0%; height: 100.0%;">     <strong>Ring 3 Ryen-krysset, Oslo</strong><br>     </div>`)[0];
-                popup_243fcad4e90a8a3e2cfe928343646360.setContent(html_341e96cf304af9360d431aa2fb363251);
-            
-        
-
-        marker_238b2f9e4eab4953369c97f0d7d9f0ed.bindPopup(popup_243fcad4e90a8a3e2cfe928343646360)
-        ;
-
-        
-    
-    
-                marker_238b2f9e4eab4953369c97f0d7d9f0ed.setIcon(icon_500c9bcb102c9ccea6289a6ca7b8fbf4);
-            
-    
-            var marker_62e57e660e9d9176731cc8eeb601f0fe = L.marker(
-                [63.396208, 10.392311],
-                {
-}
-            ).addTo(map_794149aa39d54fe0e1a280c3a330caf5);
-        
-    
-            var icon_bc16b063fcd71617cc171af079ac955f = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "road",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_76471976fed3675de44e68ccb78465a7 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_7b3e08f9ea5dccd35ec53358ac04724d = $(`<div id="html_7b3e08f9ea5dccd35ec53358ac04724d" style="width: 100.0%; height: 100.0%;">     <strong>E6 Sluppen, Trondheim</strong><br>   </div>`)[0];
-                popup_76471976fed3675de44e68ccb78465a7.setContent(html_7b3e08f9ea5dccd35ec53358ac04724d);
-            
-        
-
-        marker_62e57e660e9d9176731cc8eeb601f0fe.bindPopup(popup_76471976fed3675de44e68ccb78465a7)
-        ;
-
-        
-    
-    
-                marker_62e57e660e9d9176731cc8eeb601f0fe.setIcon(icon_bc16b063fcd71617cc171af079ac955f);
-            
-    
-            var marker_12479cde4a30c13a27a82bb6fec61da1 = L.marker(
-                [58.8955, 5.7316],
-                {
-}
-            ).addTo(map_794149aa39d54fe0e1a280c3a330caf5);
-        
-    
-            var icon_4b18afcd255432197e26dbdcde2adbdc = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "road",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_749bc7245b58e95ef84bb97e0d2f6476 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_72259787e172b118416792cc177d69f3 = $(`<div id="html_72259787e172b118416792cc177d69f3" style="width: 100.0%; height: 100.0%;">     <strong>E39 Forus, Stavanger</strong><br>   </div>`)[0];
-                popup_749bc7245b58e95ef84bb97e0d2f6476.setContent(html_72259787e172b118416792cc177d69f3);
-            
-        
-
-        marker_12479cde4a30c13a27a82bb6fec61da1.bindPopup(popup_749bc7245b58e95ef84bb97e0d2f6476)
-        ;
-
-        
-    
-    
-                marker_12479cde4a30c13a27a82bb6fec61da1.setIcon(icon_4b18afcd255432197e26dbdcde2adbdc);
-            
-    
-            var marker_27be380956b31132d5262141fbfc3f84 = L.marker(
-                [60.2962, 5.3479],
-                {
-}
-            ).addTo(map_794149aa39d54fe0e1a280c3a330caf5);
-        
-    
-            var icon_b2cc1924eb7a747591a9eac9fa6fec5f = L.AwesomeMarkers.icon(
-                {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "road",
-  "prefix": "fa",
-  "extraClasses": "fa-rotate-0",
-}
-            );
-        
-    
-        var popup_183237cef3b6cd01957e9d2a8821d738 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_cd1fc98fe54b376e61914245eae25a01 = $(`<div id="html_cd1fc98fe54b376e61914245eae25a01" style="width: 100.0%; height: 100.0%;">     <strong>E39 Lagunen, Bergen</strong><br>  </div>`)[0];
-                popup_183237cef3b6cd01957e9d2a8821d738.setContent(html_cd1fc98fe54b376e61914245eae25a01);
-            
-        
-
-        marker_27be380956b31132d5262141fbfc3f84.bindPopup(popup_183237cef3b6cd01957e9d2a8821d738)
-        ;
-
-        
-    
-    
-                marker_27be380956b31132d5262141fbfc3f84.setIcon(icon_b2cc1924eb7a747591a9eac9fa6fec5f);
-            
-</script>
 </html>
