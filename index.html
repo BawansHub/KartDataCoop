@@ -101,7 +101,7 @@ function visTabeller() {
     lagerData.forEach(item => {
         const adt = parseInt(item.adt.replace(/\s/g, ""));
         const adtHalv = adt / 2;
-        const antallKunder = adtHalv * (prosent / 100);
+        const antallKunder = (adtHalv * prosent) / (6 * 100);;
         const inntjeningDag = antallKunder * kr;
         const inntjeningUke = inntjeningDag * 6;
         const inntjeningMnd = inntjeningUke * 4;
