@@ -51,7 +51,7 @@
             <input type="number" id="kr" value="500" min="0"> kr
 
             <label for="apningsdager">Åpningsdager per år:</label>
-            <input type="number" id="apningsdager" value="250" min="0">
+            <input type="number" id="apningsdager" value="355" min="0">
         </div>
 
         <div id="tabeller"></div>
@@ -95,39 +95,51 @@ function visTabeller() {
     const kr = parseFloat(document.getElementById("kr").value) || 0;
     const apningsdager = parseInt(document.getElementById("apningsdager").value) || 0;
 
-    let html = "<h2>Coop Lagerlokasjoner</h2><table><tr><th>Navn</th><th>Adresse</th><th>ÅDT</th><th>Antall kunder (ÅDT × prosent)</th><th>Inntjening per dag</th><th>Årlig inntjening (Antall kunder per døgn × Antall åpningsdager × kr)</th></tr>";
+    let html = "<h2>Coop Lagerlokasjoner</h2><table><tr><th>Navn</th><th>Adresse</th><th>ÅDT</th><th>ÅDT/2</th><th>Antall kunder</th><th>Inntjening per dag</th><th>Per uke</th><th>Per måned</th><th>Årlig inntjening</th></tr>";
 
     lagerData.forEach(item => {
         const adt = parseInt(item.adt.replace(/\s/g, ""));
-        const antallKunder = adt * (prosent / 100);
+        const adtHalv = adt / 2;
+        const antallKunder = adtHalv * (prosent / 100);
         const inntjeningDag = antallKunder * kr;
+        const inntjeningUke = inntjeningDag * 7;
+        const inntjeningMnd = inntjeningDag * 30;
         const inntjeningAar = inntjeningDag * apningsdager;
         html += `<tr>
                     <td>${item.navn}</td>
                     <td>${item.adresse}</td>
-                    <td>${item.adt}</td>
+                    <td>${formaterAntall(adt)}</td>
+                    <td>${formaterAntall(adtHalv)}</td>
                     <td>${formaterAntall(antallKunder)}</td>
                     <td>${formater(inntjeningDag)}</td>
+                    <td>${formater(inntjeningUke)}</td>
+                    <td>${formater(inntjeningMnd)}</td>
                     <td><strong>${formater(inntjeningAar)}</strong></td>
                 </tr>`;
     });
     html += "</table>";
 
-    html += "<h2>Ønskede CoopGo-stasjoner</h2><table><tr><th>Navn</th><th>ÅDT</th><th>Antall kunder (ÅDT × prosent)</th><th>Inntjening per dag</th><th>Årlig inntjening (Antall kunder per døgn × Antall åpningsdager × kr)</th></tr>";
+    html += "<h2>Ønskede CoopGo-stasjoner</h2><table><tr><th>Navn</th><th>ÅDT</th><th>ÅDT/2</th><th>Antall kunder</th><th>Inntjening per dag</th><th>Per uke</th><th>Per måned</th><th>Årlig inntjening</th></tr>";
 
     coopgoData.forEach(item => {
         if (item.adt === "Ukjent") {
-            html += `<tr><td>${item.navn}</td><td>Ukjent</td><td>Estimert</td><td>Estimert</td><td>Estimert</td></tr>`;
+            html += `<tr><td>${item.navn}</td><td>Ukjent</td><td>Estimert</td><td>Estimert</td><td>Estimert</td><td>Estimert</td><td>Estimert</td><td>Estimert</td></tr>`;
         } else {
             const adt = parseInt(item.adt.replace(/\s/g, ""));
-            const antallKunder = adt * (prosent / 100);
+            const adtHalv = adt / 2;
+            const antallKunder = adtHalv * (prosent / 100);
             const inntjeningDag = antallKunder * kr;
+            const inntjeningUke = inntjeningDag * 7;
+            const inntjeningMnd = inntjeningDag * 30;
             const inntjeningAar = inntjeningDag * apningsdager;
             html += `<tr>
                         <td>${item.navn}</td>
-                        <td>${item.adt}</td>
+                        <td>${formaterAntall(adt)}</td>
+                        <td>${formaterAntall(adtHalv)}</td>
                         <td>${formaterAntall(antallKunder)}</td>
                         <td>${formater(inntjeningDag)}</td>
+                        <td>${formater(inntjeningUke)}</td>
+                        <td>${formater(inntjeningMnd)}</td>
                         <td><strong>${formater(inntjeningAar)}</strong></td>
                     </tr>`;
         }
