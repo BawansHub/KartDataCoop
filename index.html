@@ -16,11 +16,11 @@
             gap: 20px;
         }
         .venstre {
-            flex: 1 1 50%;
-            min-width: 300px;
+            flex: 1 1 67%;
+            min-width: 400px;
         }
         .hoyre {
-            flex: 1 1 50%;
+            flex: 1 1 33%;
             min-width: 300px;
         }
         .filter-container {
@@ -47,6 +47,9 @@
 
             <label for="kr">Forbruk per kunde per uke:</label>
             <input type="number" id="kr" value="2500" min="0" step="50"> kr
+
+            <label for="apningsdagerUke">Åpningsdager per uke:</label>
+            <input type="number" id="apningsdagerUke" value="6" min="1" max="7">
 
             <label for="apningsdager">Åpningsdager per år:</label>
             <input type="number" id="apningsdager" value="300" min="0">
@@ -92,6 +95,7 @@ function formaterProsent(verdi) {
 function visTabeller() {
     const prosent = parseFloat(document.getElementById("prosent").value) || 0;
     const kr = parseFloat(document.getElementById("kr").value) || 0;
+    const apningsdagerUke = parseInt(document.getElementById("apningsdagerUke").value) || 0;
     const apningsdager = parseInt(document.getElementById("apningsdager").value) || 0;
 
     let html = "<h2>Coop Lagerlokasjoner</h2><table><tr><th>Navn</th><th>Adresse</th><th>ÅDT</th><th>ÅDT/2</th><th>Antall kunder per dag</th><th>Markedsandel</th><th>Omsetning per dag</th><th>Per uke</th><th>Per måned</th><th>Årlig omsetning</th></tr>";
@@ -99,9 +103,9 @@ function visTabeller() {
     lagerData.forEach(item => {
         const adt = parseInt(item.adt.replace(/\s/g, ""));
         const adtHalv = adt / 2;
-        const antallKunder = (adtHalv * prosent) / (6 * 100);
+        const antallKunder = (adtHalv * prosent) / (apningsdagerUke * 100);
         const omsetningDag = antallKunder * kr;
-        const omsetningUke = omsetningDag * 6;
+        const omsetningUke = omsetningDag * apningsdagerUke;
         const omsetningMnd = omsetningUke * 4;
         const omsetningAar = omsetningDag * apningsdager;
 
@@ -128,9 +132,9 @@ function visTabeller() {
         } else {
             const adt = parseInt(item.adt.replace(/\s/g, ""));
             const adtHalv = adt / 2;
-            const antallKunder = (adtHalv * prosent) / (6 * 100);
+            const antallKunder = (adtHalv * prosent) / (apningsdagerUke * 100);
             const omsetningDag = antallKunder * kr;
-            const omsetningUke = omsetningDag * 6;
+            const omsetningUke = omsetningDag * apningsdagerUke;
             const omsetningMnd = omsetningUke * 4;
             const omsetningAar = omsetningDag * apningsdager;
 
@@ -155,6 +159,7 @@ function visTabeller() {
 // Oppdater tabeller når input endres
 document.getElementById("prosent").addEventListener("input", visTabeller);
 document.getElementById("kr").addEventListener("input", visTabeller);
+document.getElementById("apningsdagerUke").addEventListener("input", visTabeller);
 document.getElementById("apningsdager").addEventListener("input", visTabeller);
 
 // Initielt kall
